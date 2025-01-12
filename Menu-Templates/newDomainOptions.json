@@ -1,0 +1,13 @@
+[
+    "DeploymentType = Primary Site only",
+    "domainName = contoso.com",
+    "CMVersion = 2403",
+    "network = 192.168.2.0",
+    "DefaultServerOS = Server 2022",
+    "DefaultClientOS = Windows 11 Latest",
+    "DefaultSqlVersion = Sql Server 2022",
+    "UseDynamicMemory = False",
+    "IncludeClients = True",
+    "IncludeSSMSOnNONSQL = True",
+    "Go Back to Main Menu"
+]
