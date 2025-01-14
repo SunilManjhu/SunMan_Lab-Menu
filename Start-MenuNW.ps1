@@ -121,8 +121,9 @@ function Start-Navigation {
         # Handle the key stroke
         if ($key.VirtualKeyCode -eq 13) {
             # 13 = Enter key
+            # Write-Host "Working..."
             Set-CursorPosition -X $CPosition.x -Y $CPosition.y # Set the cursor position to the current position
-            # Write-Host "-> You selected $($menuItems[$selectedIndex])" # Display the selected menu item
+            Write-Host "-> You selected $($menuItems[$selectedIndex])" # Display the selected menu item
             break # Exit the loop
         }
         elseif ($key.VirtualKeyCode -eq 38) {
@@ -135,6 +136,7 @@ function Start-Navigation {
                 Set-PointerDisplayAsPerMenu -menuItems $menuItems -selectedIndex $selectedIndex # Display the menu with the new selected index
             }
         }
+        # 40 = Down arrow key
         elseif ($key.VirtualKeyCode -eq 40) {
             # 40 = Down arrow key
             if ($selectedIndex -lt ($menuItems.Count - 1)) {
@@ -147,6 +149,8 @@ function Start-Navigation {
         # If the key stroke is the Escape key, exit the menu
         elseif ($key.VirtualKeyCode -eq 27) {
             # 27 = Escape key
+            Set-CursorPosition -X $CPosition.x -Y $CPosition.y # Set the cursor position to the current position
+            Write-Host "-> You pressed ESC to exit." # Display the selected menu item
             break # Exit the loop
         }
     }
@@ -158,11 +162,8 @@ function Start-Navigation {
 $menuData = Get-MenuItems -FilePath ".\NavigationMenu.txt" # Get the menu items from the specified file
 
 Write-Host "Select an option:" # Display the menu title
-# Clear-Host # Clear the console
 $StartOfMenu = Show-Menu -menuItems $menuData.MenuItems -selectedIndex $menuData.SelectedIndex # Display the menu
-Write-Host "Postion of 1st menu item: $($StartOfMenu)" # Display the position of the 1st menu item
+Write-Host "Position of 1st menu item: $($StartOfMenu)" # Display the position of the 1st menu item
 Write-Host "Press Enter to select the menu item." # Prompt the user to press Enter to select a menu item
-Write-Host "Press ESC to exit." # Prompt the user to press Enter to select a menu item
-# $EndOfMenu = Get-CursorPosition
-# Write-Host "EndOfMenu. x :  $($EndOfMenu.x) y : $($EndOfMenu.y)"
+Write-Host "Press ESC to exit." # Prompt the user to press ESC to exit
 Start-Navigation -menuItems $menuData.MenuItems -selectedIndex $menuData.SelectedIndex -startOfmenu $StartOfMenu # Start the navigation menu
