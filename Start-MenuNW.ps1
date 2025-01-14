@@ -123,7 +123,7 @@ function Start-Navigation {
             # 13 = Enter key
             # Write-Host "Working..."
             Set-CursorPosition -X $CPosition.x -Y $CPosition.y # Set the cursor position to the current position
-            Write-Host "-> You selected $($menuItems[$selectedIndex])" # Display the selected menu item
+            Write-Host "-> You selected $($menuItems[$selectedIndex])" -ForegroundColor Green # Display the selected menu item
             break # Exit the loop
         }
         elseif ($key.VirtualKeyCode -eq 38) {
@@ -150,7 +150,7 @@ function Start-Navigation {
         elseif ($key.VirtualKeyCode -eq 27) {
             # 27 = Escape key
             Set-CursorPosition -X $CPosition.x -Y $CPosition.y # Set the cursor position to the current position
-            Write-Host "-> You pressed ESC to exit." # Display the selected menu item
+            Write-Host "-> You pressed ESC to exit." -ForegroundColor Red # Display the selected menu item
             break # Exit the loop
         }
     }
