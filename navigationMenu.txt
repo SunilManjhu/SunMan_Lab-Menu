@@ -1,4 +1,0 @@
-Create a New Domain
-Modify Existing Domains
-Other Options  # This will now be handled
-Exit
