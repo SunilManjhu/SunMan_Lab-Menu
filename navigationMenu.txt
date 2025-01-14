@@ -1,4 +1,5 @@
 Create a New Domain
 Modify Existing Domains
+Add a client
 Other Options  # This will now be handled
 Exit
