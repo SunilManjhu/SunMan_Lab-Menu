@@ -106,9 +106,6 @@ function Start-Navigation {
         
         [Parameter(Mandatory = $true)] # Mandatory parameter
         [int]$startOfmenu # The selected index
-        
-        # [Parameter(Mandatory = $true)] # Mandatory parameter
-        # [int]$endOfMenu # The selected index
     )
 
     $CPosition = Get-CursorPosition # Get the current cursor position
@@ -121,7 +118,6 @@ function Start-Navigation {
         # Handle the key stroke
         if ($key.VirtualKeyCode -eq 13) {
             # 13 = Enter key
-            # Write-Host "Working..."
             Set-CursorPosition -X $CPosition.x -Y $CPosition.y # Set the cursor position to the current position
             Write-Host "-> You selected $($menuItems[$selectedIndex])" -ForegroundColor Green # Display the selected menu item
             break # Exit the loop
@@ -130,23 +126,28 @@ function Start-Navigation {
             # 38 = Up arrow key
             # If the selected index is greater than 0, move the selection up
             if ($selectedIndex -gt 0) {
-                # Move the selection up
-                $selectedIndex-- # Decrement the selected index because the Up arrow key was pressed
-                Set-CursorPositionToTopOfMenu -startOfmenu $startOfmenu # Set the cursor position to the top of the menu
-                Set-PointerDisplayAsPerMenu -menuItems $menuItems -selectedIndex $selectedIndex # Display the menu with the new selected index
+                $selectedIndex-- # Decrement the selected index
             }
+            else {
+                # If already at the top, cycle to the bottom
+                $selectedIndex = $menuItems.Count - 1
+            }
+            Set-CursorPositionToTopOfMenu -startOfmenu $startOfmenu # Set the cursor position to the top of the menu
+            Set-PointerDisplayAsPerMenu -menuItems $menuItems -selectedIndex $selectedIndex # Display the menu with the new selected index
         }
-        # 40 = Down arrow key
         elseif ($key.VirtualKeyCode -eq 40) {
             # 40 = Down arrow key
+            # If the selected index is less than the last item, move the selection down
             if ($selectedIndex -lt ($menuItems.Count - 1)) {
-                # Move the selection down
-                $selectedIndex++ # Increment the selected index because the Down arrow key was pressed
-                Set-CursorPositionToTopOfMenu -startOfmenu $startOfmenu # Set the cursor position to the top of the menu
-                Set-PointerDisplayAsPerMenu -menuItems $menuItems -selectedIndex $selectedIndex # Display the menu with the new selected index
+                $selectedIndex++ # Increment the selected index
             }
+            else {
+                # If already at the bottom, cycle to the top
+                $selectedIndex = 0
+            }
+            Set-CursorPositionToTopOfMenu -startOfmenu $startOfmenu # Set the cursor position to the top of the menu
+            Set-PointerDisplayAsPerMenu -menuItems $menuItems -selectedIndex $selectedIndex # Display the menu with the new selected index
         }
-        # If the key stroke is the Escape key, exit the menu
         elseif ($key.VirtualKeyCode -eq 27) {
             # 27 = Escape key
             Set-CursorPosition -X $CPosition.x -Y $CPosition.y # Set the cursor position to the current position
@@ -157,6 +158,7 @@ function Start-Navigation {
 
     [System.Console]::CursorVisible = $true # Show the cursor
 }
+
 
 # Main script logic starts here
 $menuData = Get-MenuItems -FilePath ".\NavigationMenu.txt" # Get the menu items from the specified file
